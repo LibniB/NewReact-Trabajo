@@ -5,7 +5,8 @@ import "./App.css";
 import TablaComponent from "./components/TablaComponent";
 import BuscadorComponent from "./components/BuscadorComponent";
 import RegistradorComponent from "./components/RegistradorComponent";
-import ModalComponent from "./components/ModalComponent";
+import ModalAgregarComponent from "./components/ModalAgregarComponent";
+import Swal from 'sweetalert2';
 
 
 function App() {
@@ -15,118 +16,103 @@ function App() {
   const [Productos, setProductos] = useState([
     {
       id: "1",
-      Nombre: "Matematicas",
-      Caracteristicas: "Estudio de números, formas y cambios.",
+      Nombre: "Smartphone",
+      Caracteristicas: "Teléfono inteligente con pantalla táctil y capacidades de comunicación avanzadas."
     },
     {
       id: "2",
-      Nombre: "Filosofia",
-      Caracteristicas: "Indagación sobre la realidad y la existencia.",
+      Nombre: "Refrigerador",
+      Caracteristicas: "Aparato eléctrico utilizado para mantener los alimentos frescos y conservados."
     },
     {
       id: "3",
-      Nombre: "Ciencias Sociales",
-      Caracteristicas: "Estudio del comportamiento humano y las interacciones sociales.",
+      Nombre: "Sofá",
+      Caracteristicas: "Mueble acolchado diseñado para sentarse cómodamente."
     },
     {
       id: "4",
-      Nombre: "Ciencias Naturales",
-      Caracteristicas: "Estudio de fenómenos naturales y procesos universales.",
+      Nombre: "Zapatos deportivos",
+      Caracteristicas: "Calzado diseñado para actividades físicas y deportivas."
     },
     {
       id: "5",
-      Nombre: "Literatura",
-      Caracteristicas: "Exploración de la expresión artística a través del lenguaje escrito."
+      Nombre: "Televisor",
+      Caracteristicas: "Dispositivo para recibir señales de televisión y mostrar imágenes y sonido."
     },
-      
     {
       id: "6",
-      Nombre: "Historia",
-      Caracteristicas: "Estudio de eventos pasados y su impacto en la sociedad."
+      Nombre: "Aspiradora",
+      Caracteristicas: "Dispositivo eléctrico utilizado para limpiar el polvo y la suciedad de las superficies."
     },
-      
     {
       id: "7",
-      Nombre: "Física",
-      Caracteristicas: "Investigación de las leyes fundamentales del universo y su aplicación."
+      Nombre: "Muñeca",
+      Caracteristicas: "Figura de juguete con forma humana, generalmente utilizada para el juego simbólico."
     },
-      
     {
       id: "8",
-      Nombre: "Química",
-      Caracteristicas: "Estudio de la composición, estructura y propiedades de la producto."
+      Nombre: "Novela",
+      Caracteristicas: "Obra literaria de ficción narrativa, generalmente larga y en prosa."
     },
-      
     {
       id: "9",
-      Nombre: "Biología",
-      Caracteristicas: "Exploración de la vida y los organismos vivos."
+      Nombre: "Destornillador",
+      Caracteristicas: "Herramienta manual utilizada para apretar o aflojar tornillos."
     },
-      
     {
       id: "10",
-      Nombre: "Psicología",
-      Caracteristicas: "Estudio del comportamiento y los procesos mentales."
+      Nombre: "Leche",
+      Caracteristicas: "Producto lácteo líquido, generalmente obtenido de vacas."
     },
-      
     {
       id: "11",
-      Nombre: "Economía",
-      Caracteristicas: "Análisis de la producción, distribución y consumo de bienes y servicios."
+      Nombre: "Reloj de pulsera",
+      Caracteristicas: "Dispositivo para medir el tiempo que se lleva en la muñeca."
     },
-      
     {
       id: "12",
-      Nombre: "Arte",
-      Caracteristicas: "Manifestación creativa que refleja la imaginación y las emociones."
+      Nombre: "Bicicleta",
+      Caracteristicas: "Vehículo de dos ruedas impulsado por pedales."
     },
-      
     {
       id: "13",
-      Nombre: "Geografía",
-      Caracteristicas: "Estudio de la superficie terrestre y sus características."
+      Nombre: "Laptop",
+      Caracteristicas: "Computadora portátil diseñada para ser transportada fácilmente."
     },
-      
     {
       id: "14",
-      Nombre: "Informática",
-      Caracteristicas: "Ciencia que estudia el tratamiento automático de la información."
+      Nombre: "Cámara fotográfica",
+      Caracteristicas: "Dispositivo para capturar imágenes estáticas o en movimiento."
     },
-      
     {
       id: "15",
-      Nombre: "Sociología",
-      Caracteristicas: "Análisis de las estructuras y dinámicas sociales."
+      Nombre: "Colchón",
+      Caracteristicas: "Superficie acolchada utilizada para dormir."
     },
-      
     {
       id: "16",
-      Nombre: "Derecho",
-      Caracteristicas: "Sistema de normas que regulan la conducta humana en la sociedad."
+      Nombre: "Cepillo de dientes",
+      Caracteristicas: "Herramienta utilizada para limpiar los dientes y las encías."
     },
-      
     {
       id: "17",
-      Nombre: "Medicina",
-      Caracteristicas: "Ciencia y práctica relacionada con el diagnóstico y tratamiento de enfermedades."
+      Nombre: "Mesa de comedor",
+      Caracteristicas: "Mueble utilizado para comer en una posición sentada."
     },
-      
     {
       id: "18",
-      Nombre: "Astronomía",
-      Caracteristicas: "Estudio de los cuerpos celestes y el universo."
+      Nombre: "Guitarra",
+      Caracteristicas: "Instrumento musical de cuerda pulsada."
     },
-      
     {
       id: "19",
-      Nombre: "Educación",
-      Caracteristicas: "Proceso de facilitar el aprendizaje y el desarrollo en los individuos."
+      Nombre: "Cafetera",
+      Caracteristicas: "Aparato utilizado para hacer café."
     },
-      
     {
       id: "20",
-      Nombre: "Ecología",
-      Caracteristicas: "Estudio de las interacciones entre los organismos y su entorno."
+      Nombre: "Lámpara de escritorio",
+      Caracteristicas: "Dispositivo de iluminación diseñado para colocarse en un escritorio."
     }
 
   ]) 
@@ -143,7 +129,7 @@ function App() {
   const handleContador = (e)=>{
     setContador(Number(e.target.value))
   }
-  const Contador = [5,10,15,20]
+  const Contador = [5,10,15,20,25]
 
   
   
@@ -154,12 +140,28 @@ function App() {
       producto.Caracteristicas.toLowerCase().includes(searchInput.toLowerCase())
   ).slice(0, contador);
 
-  const eliminarProducto=(id)=>{
+
+  const eliminarProducto = (id) => {
     const nuevoArray = [...Productos];
-    const buscar = nuevoArray.findIndex(producto=>producto.id===id);
-      nuevoArray.splice(buscar,1);
-      setProductos(nuevoArray);
-  }
+    const buscar = nuevoArray.findIndex((producto) => producto.id === id);
+  
+    if (buscar !== -1) {
+      Swal.fire({
+        text: '¿Estás seguro de eliminar este producto?',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Eliminar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          nuevoArray.splice(buscar, 1);
+          setProductos(nuevoArray);
+          Swal.fire('¡Eliminado!', 'El producto ha sido eliminado.', 'success');
+        }
+      });
+    }
+  };
+
 
   const [showModal, setShowModal] = useState(false);
 
@@ -174,13 +176,13 @@ function App() {
         
 
         <TablaComponent Productos={Productos} searchInput={searchInput} contador={contador} handleSearch={handleSearch} eliminarProducto={eliminarProducto} showModal={showModal}  
-         toggleModal={setShowModal}  />
+         VisibilityModal={setShowModal}  />
         <RegistradorComponent
         Tableregistros={filteredProductos.length}
         Tableproductos={Productos.length}
         
       ></RegistradorComponent>
-      {showModal && <ModalComponent toggleModal={setShowModal} />}
+      {showModal && <ModalAgregarComponent VisibilityModal={setShowModal} setProductos={setProductos} />}
       
   </div>
   );

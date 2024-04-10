@@ -2,9 +2,9 @@ import BuscadorComponent from "./BuscadorComponent";
 import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import ModalComponent from "./ModalComponent";
+import ModalAgregarComponent from "./ModalAgregarComponent";
 
-const TablaComponent = ({Productos, searchInput, contador, handleSearch, eliminarProducto,showModal, toggleModal}) => {
+const TablaComponent = ({Productos, searchInput, contador, handleSearch, eliminarProducto,showModal, VisibilityModal, setProductos}) => {
   
   const filteredProductos = Productos.filter((producto) =>
   producto.Nombre.toLowerCase().includes(searchInput.toLowerCase()) ||
@@ -34,16 +34,16 @@ const TablaComponent = ({Productos, searchInput, contador, handleSearch, elimina
               <td>{producto.Nombre}</td>
               <td>{producto.Caracteristicas}</td>
               <td>
-                <button style={{backgroundColor:'white'}} onClick={toggleModal}><CiEdit style={{color:'black'}}/></button>
+                <button style={{backgroundColor:'white'}} onClick={VisibilityModal}><CiEdit style={{color:'black'}}/></button>
                
-                <button style={{backgroundColor:'white'}} onClick={()=>eliminarProducto(producto.id)}><AiFillDelete style={{color:'red'}} /></button>               
+                <button style={{backgroundColor:'white'}} onClick={()=>{eliminarProducto(producto.id)}}><AiFillDelete style={{color:'red'}} /></button>               
                 </td>             
             </tr>
           ))}
         </tbody>
       </table>
-      <button className="btn btn-success mb-4" onClick={toggleModal}>Agregar</button>
-      {showModal && <ModalComponent toggleModal={toggleModal} />}
+      <button className="btn btn-success mb-4" onClick={VisibilityModal}>Agregar</button>
+      {showModal && <ModalAgregarComponent VisibilityModal={VisibilityModal} setProductos={setProductos} />}
     </div>
     );
   };

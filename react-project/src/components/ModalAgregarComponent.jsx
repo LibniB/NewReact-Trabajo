@@ -1,9 +1,30 @@
 import React from 'react';
+import { useState } from 'react';
 
-const ModalComponent = ({toggleModal}) => {
+const ModalAgregarComponent = ({VisibilityModal, setProductos}) => {
+    const [id, setId] = useState('');
+    const [Nombre, setNombre] = useState('');
+    const [Caracteristicas, setCaracteristicas] = useState('');
+
     const closeModal = () => {
-        toggleModal(false); 
+        VisibilityModal(false); 
       };
+      
+    const handleAgregar = () => {
+        const nuevoProducto = {
+            id: id,
+            Nombre: Nombre,
+            Caracteristicas: Caracteristicas
+        };
+        setProductos((productos) => [...productos, nuevoProducto]);
+        VisibilityModal(false);
+        
+        Swal.fire({
+            text: 'El producto ha sido agregado con éxito.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+    };
     return (
         <div className="modal" tabIndex="-1" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
             <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '400px' }}>
@@ -15,20 +36,20 @@ const ModalComponent = ({toggleModal}) => {
                         <form>
                             <div className="mb-3">
                                 <label htmlFor="id" className="form-label">ID</label>
-                                <input type="text" className="form-control" id="id" />
+                                <input type="text" className="form-control" id="id" onChange={(e) => setId(e.target.value)} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="nombre" className="form-label">Nombre</label>
-                                <input type="text" className="form-control" id="nombre" />
+                                <input type="text" className="form-control" id="nombre" onChange={(e) => setNombre(e.target.value)} />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="descripcion" className="form-label">Descripción</label>
-                                <textarea className="form-control" id="descripcion" rows="2"></textarea>
+                                <textarea className="form-control" id="descripcion" rows="2" onChange={(e) => setCaracteristicas(e.target.value)}></textarea>
                             </div>
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-success" onClick={toggleModal}>Agregar</button>
+                        <button type="button" className="btn btn-success" onClick={handleAgregar}>Agregar</button>
                         <button type="button" className="btn btn-danger" onClick={closeModal}>Cancelar</button>
                     </div>
                 </div>
@@ -38,4 +59,4 @@ const ModalComponent = ({toggleModal}) => {
     );
 }
 
-export default ModalComponent;
+export default ModalAgregarComponent;
