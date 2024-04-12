@@ -33,6 +33,7 @@ const ModalAgregarComponent = ({VisibilityModal, setProductos}) => {
                         <button type="button" className="btn-close" onClick={closeModal}></button>
                     </div>
                     <div className="modal-body">
+                      <h2>Agregar Producto</h2>
                         <form>
                             <div className="mb-3">
                                 <label htmlFor="id" className="form-label">ID</label>
@@ -43,8 +44,8 @@ const ModalAgregarComponent = ({VisibilityModal, setProductos}) => {
                                 <input type="text" className="form-control" id="nombre" onChange={(e) => setNombre(e.target.value)} />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="descripcion" className="form-label">Descripción</label>
-                                <textarea className="form-control" id="descripcion" rows="2" onChange={(e) => setCaracteristicas(e.target.value)}></textarea>
+                                <label htmlFor="Caracteristicas" className="form-label">Caracteristicas</label>
+                                <textarea className="form-control" id="Caracteristicas" rows="2" onChange={(e) => setCaracteristicas(e.target.value)}></textarea>
                             </div>
                         </form>
                     </div>

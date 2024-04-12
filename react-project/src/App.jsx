@@ -6,12 +6,14 @@ import TablaComponent from "./components/TablaComponent";
 import BuscadorComponent from "./components/BuscadorComponent";
 import RegistradorComponent from "./components/RegistradorComponent";
 import ModalAgregarComponent from "./components/ModalAgregarComponent";
+import ModalEditarComponent from "./components/ModalEditarComponent";
 import Swal from 'sweetalert2';
 
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [contador, setContador] = useState(5);
+  const [productoEditar, setProductoEditar] = useState(null);
 
   const [Productos, setProductos] = useState([
     {
@@ -162,8 +164,18 @@ function App() {
     }
   };
 
-
+  // manejo de modales
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal,setShowEditModal]= useState(false);
+
+
+  const handleUpdateProduct = (updatedProduct) => {
+    const updatedProductos = Productos.map((producto) =>
+      producto.id === updatedProduct.id ? updatedProduct : producto
+    );
+    setProductos(updatedProductos);
+    setShowEditModal(false);
+  };
 
   return (
 
@@ -175,14 +187,35 @@ function App() {
         </select>  
         
 
-        <TablaComponent Productos={Productos} searchInput={searchInput} contador={contador} handleSearch={handleSearch} eliminarProducto={eliminarProducto} showModal={showModal}  
-         VisibilityModal={setShowModal}  />
+        <TablaComponent 
+        Productos={Productos}
+        searchInput={searchInput}
+        contador={contador}
+        handleSearch={handleSearch}
+        eliminarProducto={eliminarProducto}
+        showModal={showModal}
+        VisibilityModal={setShowModal}
+        showEditModal={showEditModal}
+        VisibilityModalEdit={setShowEditModal}
+        productoEditar={productoEditar}
+        setProductoEditar={setProductoEditar}
+     
+        />
         <RegistradorComponent
         Tableregistros={filteredProductos.length}
         Tableproductos={Productos.length}
         
       ></RegistradorComponent>
-      {showModal && <ModalAgregarComponent VisibilityModal={setShowModal} setProductos={setProductos} />}
+
+      {showModal && <ModalAgregarComponent 
+      VisibilityModal={setShowModal} 
+      setProductos={setProductos} />}
+
+      {showEditModal && <ModalEditarComponent 
+      VisibilityModalEdit={setShowEditModal} 
+      setProductoEditar={setProductoEditar}
+      handleUpdateProduct={handleUpdateProduct}
+      />}
       
   </div>
   );
