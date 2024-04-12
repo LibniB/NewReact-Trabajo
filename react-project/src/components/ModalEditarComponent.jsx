@@ -1,36 +1,32 @@
 import React, { useState, useEffect } from 'react';
 
-const ModalEditarComponent = ({ VisibilityModalEdit, productoEditar,setProductoEditar, handleUpdateProduct}) => {
+const ModalEditarComponent = ({ VisibilityModalEdit, productoEditar,setProductoEditar, handleUpdateProduct,onUpdate,onCancel, Productos}) => {
     const [id, setId] = useState('');
     const [Nombre, setNombre] = useState('');
     const [Caracteristicas, setCaracteristicas] = useState('');
+
 
     useEffect(() => {
         if (productoEditar) {
             setId(productoEditar.id);
             setNombre(productoEditar.Nombre);
             setCaracteristicas(productoEditar.Caracteristicas);
-        } else {
-            setId('');
-            setNombre('');
-            setCaracteristicas('');
         }
     }, [productoEditar]);
 
+    // Función para manejar el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Llama a la función onUpdate pasada como prop, pasando los datos actualizados del producto
+        onUpdate({ ...productoEditar, id, Nombre, Caracteristicas });
+    
+        onCancel();
+  };
+  
     const closeModalEdit = () => {
         VisibilityModalEdit(false);
     };
 
-    const handleActualizar = () => {
-        const productoActualizado = {
-            id: id,
-            Nombre: Nombre,
-            Caracteristicas: Caracteristicas
-        };
-
-        handleUpdateProduct(productoActualizado);
-        VisibilityModalEdit(false);
-    };
     
       
 
@@ -39,11 +35,11 @@ const ModalEditarComponent = ({ VisibilityModalEdit, productoEditar,setProductoE
             <div className="modal-dialog modal-dialog-centered" style={{ maxWidth: '400px' }}>
                 <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" className="btn-close" onClick={closeModalEdit}></button>
+                        <button type="button" className="btn-close" onClick={onCancel}></button>
                     </div>
                     <div className="modal-body">
                         <h2>Editar Producto</h2>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="id" className="form-label">ID</label>
                                 <input type="text" className="form-control" id="id" name='id' value={id} onChange={(e) => setId(e.target.value)}  />
@@ -59,8 +55,8 @@ const ModalEditarComponent = ({ VisibilityModalEdit, productoEditar,setProductoE
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-success" onClick={handleActualizar}>Actualizar</button>
-                        <button type="button" className="btn btn-danger" onClick={closeModalEdit}>Cancelar</button>
+                        <button type="submit" className="btn btn-success" onClick={handleSubmit}>Actualizar</button>
+                        <button type="button" className="btn btn-danger" onClick={onCancel}>Cancelar</button>
                     </div>
                 </div>
             </div>       

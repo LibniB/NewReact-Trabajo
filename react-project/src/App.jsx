@@ -14,6 +14,7 @@ function App() {
   const [searchInput, setSearchInput] = useState("");
   const [contador, setContador] = useState(5);
   const [productoEditar, setProductoEditar] = useState(null);
+  const [indiceProductoSeleccionado, setIndiceProductoSeleccionado] = useState(null);
 
   const [Productos, setProductos] = useState([
     {
@@ -168,6 +169,22 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [showEditModal,setShowEditModal]= useState(false);
 
+  const handleEditarProducto = (indice) => {
+    setIndiceProductoSeleccionado(indice);
+  };
+
+  const handleActualizarProducto = (productoActualizado) => {
+    const productosActualizados = [...Productos];
+    productosActualizados[indiceProductoSeleccionado] = productoActualizado;
+    setProductos(productosActualizados);
+    setIndiceProductoSeleccionado(null);
+    Swal.fire({
+      icon: 'success',
+      title: '¡Producto Actualizado!',
+      text: 'El producto ha sido actualizado correctamente.',
+  });
+  };
+
 
   const handleUpdateProduct = (updatedProduct) => {
     const updatedProductos = Productos.map((producto) =>
@@ -199,8 +216,11 @@ function App() {
         VisibilityModalEdit={setShowEditModal}
         productoEditar={productoEditar}
         setProductoEditar={setProductoEditar}
+        onEditar={handleEditarProducto}
+       
      
         />
+        
         <RegistradorComponent
         Tableregistros={filteredProductos.length}
         Tableproductos={Productos.length}
@@ -216,6 +236,18 @@ function App() {
       setProductoEditar={setProductoEditar}
       handleUpdateProduct={handleUpdateProduct}
       />}
+
+  {indiceProductoSeleccionado !== null && (
+    <ModalEditarComponent
+    VisibilityModalEdit={setShowEditModal} // Pass VisibilityModalEdit here
+    productoEditar={Productos[indiceProductoSeleccionado]}
+    setProductoEditar={setProductoEditar}
+    handleUpdateProduct={handleUpdateProduct}
+    onUpdate={handleActualizarProducto}
+    onCancel={() => setIndiceProductoSeleccionado(null)}
+  />
+)}
+
       
   </div>
   );
