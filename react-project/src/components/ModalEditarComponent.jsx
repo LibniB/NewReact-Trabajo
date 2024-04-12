@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const ModalEditarComponent = ({ VisibilityModalEdit, productoEditar,setProductoEditar, handleUpdateProduct,onUpdate,onCancel, Productos}) => {
+const ModalEditarComponent = ({ productoEditar,onUpdate,onCancel, Productos}) => {
     const [id, setId] = useState('');
     const [Nombre, setNombre] = useState('');
     const [Caracteristicas, setCaracteristicas] = useState('');
@@ -15,20 +15,13 @@ const ModalEditarComponent = ({ VisibilityModalEdit, productoEditar,setProductoE
     }, [productoEditar]);
 
     // Función para manejar el envío del formulario
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
     // Llama a la función onUpdate pasada como prop, pasando los datos actualizados del producto
-        onUpdate({ ...productoEditar, id, Nombre, Caracteristicas });
-    
+        onUpdate({ ...productoEditar, id, Nombre, Caracteristicas })
         onCancel();
   };
   
-    const closeModalEdit = () => {
-        VisibilityModalEdit(false);
-    };
-
-    
-      
 
     return (
         <div className="modal" tabIndex="-1" style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
